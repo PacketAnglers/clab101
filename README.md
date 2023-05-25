@@ -159,7 +159,7 @@ If you want to define a different image for a node, you would do it within the n
 ```bash
 <node name>:
       kind: ceos
-      image: ceos:4.29.1F
+      image: ceos:4.30.0F
       mgmt_ipv4: 10.38.4.130
       startup-config: configs/ack/SPI-ACK-01A.cfg ( maps to location in directory structure )
       ports: ( define ports you would use to remotely connect to the device )
