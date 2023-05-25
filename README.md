@@ -93,3 +93,30 @@ sudo docker exec -it <node name> Cli
 ```
 
 To access the node from the graphite diagram, find the node you want to connect to, right click, and click SSH.
+
+
+## Shutting Down the Topology
+
+In order to make any changes to the underlying topology or the topology file, you will need to shut down the virtual environment.  
+
+In order to shut down the virtual environment, issue following command:
+
+```bash
+sudo clab destroy -t <topology name.yml> --cleanup
+```
+
+Due to the size of the topology, it may not shut down cleanly and give errors indicating it could not exit the containers as they did not respond to the shutdown command.  When this happens you will want to monitor the docker containers until they all show exited, and then remove them.
+
+To monitor the docker containers and see if they are exited, issue the following command:
+
+```bash
+sudo docker ps -a
+```
+
+All the containers should show `exited x min ago1`.
+
+Once they are exited, you can manually remove and clean up the containers with the following command:
+
+```bash
+sudo docker container prune
+```
