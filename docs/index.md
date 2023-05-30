@@ -44,7 +44,7 @@ bash -c "$(curl -sL https://get.containerlab.dev)"
 
 We can validate that ContainerLab was installed by using the `sudo clab version` command:
 
-```bash hl_lines="10"
+```ini hl_lines="10"
 mitch@mitchlab2:~$ sudo clab version
 
                            _                   _       _     
@@ -109,6 +109,9 @@ ContainerLab makes use of YAML files to create, and deploy, topologies. For this
 { .annotate }
 
 1. :pencil2: The topology file can be named whatever we'd like. We are just calling it `lab.yml`for simplicity.
+
+???+ note
+    This guide does not make use of all possible parameters in the topology file. For a complete list of parameters/options that can be defined in a ContainerLab topology file, please refer to the [ContainerLab Documentation](https://containerlab.dev/manual/nodes/)
 
 ```yaml
 ---
@@ -236,10 +239,12 @@ topology:
       exec:
         - bash /usr/local/bin/hostnetconfig.sh -b -i 10.20.20.101/24 -g 10.20.20.1
 
+  links: #(18)!
+
 ####################
 # SPINE1 to LEAF   #
 ####################
-    - endpoints: ["SPINE1:et1", "LEAF1:et1"] #(18)!
+    - endpoints: ["SPINE1:et1", "LEAF1:et1"] #(19)!
     - endpoints: ["SPINE1:et2", "LEAF2:et1"]
     - endpoints: ["SPINE1:et3", "LEAF3:et1"]
     - endpoints: ["SPINE1:et4", "LEAF4:et1"]
@@ -306,10 +311,28 @@ topology:
 15. :pencil2: (Optional) If an inbound connection to TCP port **8001** is received on the Docker host, it will forward this to TCP port **80** (HTTP) on the `SPINE1` node
 16. :pencil2: (Optional) If an inbound connection to TCP port **44301** is received on the Docker host, it will forward this to TCP port **443** (HTTP) on the `SPINE1` node
 17. :pencil2: (Optional) Unique to the mitchv85/devhost image. Instructs cLab to run the `hostnetconfig.sh` shell script to configure IP addressing and/or LACP after deploying the node. More informaiton [here](https://hub.docker.com/repository/docker/mitchv85/devhost/general)
-18. :pencil2: Define a link between `SPINE1, Ethernet1` and `LEAF1, Ethernet1`. This can be customized for modular interfaces as well. For example, `et1_1_1` would evaluate to `Ethernet1/1/1` in cEOS-lab.
-
---8<-- "includes/abbreviations.md"
+18. :pencil2: The `links` section is where we will define how nodes are to be connected together
+19. :pencil2: Define a link between `SPINE1, Ethernet1` and `LEAF1, Ethernet1`. This can be customized for modular interfaces as well. For example, `et1_1_1` would evaluate to `Ethernet1/1/1` in cEOS-lab.
 
 ### **Deploying a Topology**
 
-Next, let's tell ContainerLab to deploy our topology
+Next, let's tell ContainerLab to deploy our topology.
+
+First, we'll check to see if any other topologies are running on the ContainerLab host by using the `clab inspect` command.
+
+```bash
+mitch@mitchlab2:~$ sudo clab inspect -a
+INFO[0000] no containers found
+```
+
+The output above indicates that no other topologies are running on the ContainerLab host.
+
+ContainerLab supports multiple topologies running in parallel on the same host. But, in this example, we want to make sure our topology is the only one running. Perhaps the ContainerLab host we're running only has enough resources to run our topology.
+
+Next, we'll use the `clab deploy` command to deploy our topology.
+
+```bash
+
+```
+
+--8<-- "includes/abbreviations.md"
