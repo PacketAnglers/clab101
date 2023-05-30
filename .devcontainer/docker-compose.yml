@@ -1,0 +1,15 @@
+version: "3.9"
+
+services:
+  clab101:
+    build: .
+    image: "clab101:latest"
+    container_name: clab101
+    restart: always
+    command: ['tail', '-f', '/dev/null']
+
+    environment:
+      - TZ=America/New_York
+      - DEBIAN_FRONTEND=noninteractive
+    volumes:
+      - ../:/workspace
