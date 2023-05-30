@@ -22,7 +22,7 @@ Getting up and running with ContainerLab requires the following:
 
 1. :pencil2: Containerized Network Operating Systems are much more resource efficient than their tradtionally virtualized conterparts. For example, as of 4.30.0F, each **cEOS-lab** node consumes ~850MB of memory when up and running. **vEOS-lab** requires 4GB.
 
-2. :pencil2: Topologies are most CPU intensive at boot. There is a `startup-delay` toggle that can be used to help manage this when a topology is too large to simultaneously boot all nodes.
+2. :pencil2: Topologies are most CPU intensive at boot. There is a `startup-delay` parameter that can be used to help manage this when a topology is too large to simultaneously boot all nodes. A list of node parameters can be found [here](https://containerlab.dev/manual/nodes/). This is covered in more detail in the [Creating a Topology](#creating-a-topology) section.
 
 3. :pencil2: We will be using cEOS-Lab for this guide. However, we can use other Network Operating Systems to create large multi-vendor topologies as needed.
 
