@@ -5,7 +5,7 @@
 ### Directory Layout
 
 ```bash
-|---aristacontainer (home)    
+|---aristacontainer (home)
     |---images
         |--- ( cEOS image files live here )
     |---osuwmcdc
@@ -32,7 +32,7 @@ This is an example of a node configuration section from the topology file:
 
 ```bash
 <node name>:
-      kind: ceos 
+      kind: ceos
       mgmt_ipv4: 10.38.4.130
       startup-config: configs/ack/SPI-ACK-01A.cfg ( maps to location in directory structure )
       ports: ( define ports you would use to remotely connect to the device )
@@ -95,10 +95,9 @@ sudo docker exec -it <node name> Cli
 
 To access the node from the graphite diagram, find the node you want to connect to, right click, and click SSH.
 
-
 ## Shutting Down the Topology
 
-In order to make any changes to the underlying topology or the topology file, you will need to shut down the virtual environment.  
+In order to make any changes to the underlying topology or the topology file, you will need to shut down the virtual environment.
 
 In order to shut down the virtual environment, issue following command:
 

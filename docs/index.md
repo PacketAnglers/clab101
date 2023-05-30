@@ -14,18 +14,17 @@ Getting up and running with ContainerLab requires the following:
 
 - Linux host (this guide uses Ubuntu 20.04)
 - Sufficient memory (1) and compute (2) to run desired topologies
-- Docker 
+- Docker
 - ContainerLab
 - Containerized Network Operating System of choice (3)
 
 </div>
 
 1. :pencil2: Containerized Network Operating Systems are much more resource efficient than their tradtionally virtualized conterparts. For example, as of 4.30.0F, each **cEOS-lab** node consumes ~850MB of memory when up and running. **vEOS-lab** requires 4GB.
-    
+
 2. :pencil2: Topologies are most CPU intensive at boot. There is a `startup-delay` toggle that can be used to help manage this when a topology is too large to simultaneously boot all nodes.
 
 3. :pencil2: We will be using cEOS-Lab for this guide. However, we can use other Network Operating Systems to create large multi-vendor topologies as needed.
-
 
 ## **Installation**
 
@@ -47,12 +46,12 @@ We can validate that ContainerLab was installed by using the `sudo clab version`
 ```ini hl_lines="10"
 mitch@mitchlab2:~$ sudo clab version
 
-                           _                   _       _     
-                 _        (_)                 | |     | |    
- ____ ___  ____ | |_  ____ _ ____   ____  ____| | ____| | _  
-/ ___) _ \|  _ \|  _)/ _  | |  _ \ / _  )/ ___) |/ _  | || \ 
+                           _                   _       _
+                 _        (_)                 | |     | |
+ ____ ___  ____ | |_  ____ _ ____   ____  ____| | ____| | _
+/ ___) _ \|  _ \|  _)/ _  | |  _ \ / _  )/ ___) |/ _  | || \
 ( (__| |_|| | | | |_( ( | | | | | ( (/ /| |   | ( ( | | |_) )
-\____)___/|_| |_|\___)_||_|_|_| |_|\____)_|   |_|\_||_|____/ 
+\____)___/|_| |_|\___)_||_|_|_| |_|\____)_|   |_|\_||_|____/
 
     version: 0.41.2
      commit: fe51f41f
@@ -87,7 +86,7 @@ sudo docker import cEOS64-lab-4.30.0F.tar.xz ceos:4.30.0F #(1)!
 We can validate that the image was imported by using the `sudo docker images` command:
 
 ```bash hl_lines="4"
-mitch@mitchlab2:~$ sudo docker images 
+mitch@mitchlab2:~$ sudo docker images
 REPOSITORY            TAG       IMAGE ID       CREATED         SIZE
 ceos                  trunk     1d73d2ef5663   7 days ago      2.37GB
 ceos                  4.30.0F   0ca9c82f8c3b   2 weeks ago     2.47GB
@@ -340,51 +339,51 @@ mitch@mitchlab2:~$ sudo clab deploy -t lab.yaml #(1)!
 The output of this command, resulting in a successfully running topology, is below for reference:
 
 ```ini
-INFO[0000] Containerlab v0.41.2 started                 
-INFO[0000] Parsing & checking topology file: lab.yaml   
-INFO[0000] Creating lab directory: /home/mitch/avd-demo/clab-evpn-demo 
-INFO[0000] Creating docker network: Name="mgmt", IPv4Subnet="172.100.100.0/24", IPv6Subnet="", MTU="1500" 
-INFO[0000] Creating container: "HostB"                  
-INFO[0000] Creating container: "HostA"                  
-INFO[0000] Creating container: "HostC"                  
-INFO[0000] Creating container: "HostD"                  
-INFO[0000] Creating container: "SPINE2"                 
-INFO[0000] Creating container: "LEAF2"                  
-INFO[0000] Creating container: "LEAF4"                  
-INFO[0000] Creating container: "LEAF1"                  
-INFO[0000] Creating container: "SPINE1"                 
-INFO[0000] Creating container: "LEAF3"                  
-INFO[0001] Creating virtual wire: SPINE2:et3 <--> LEAF3:et2 
-INFO[0001] Creating virtual wire: SPINE2:et4 <--> LEAF4:et2 
-INFO[0001] Creating virtual wire: LEAF1:et6 <--> LEAF2:et6 
-INFO[0001] Creating virtual wire: LEAF3:et5 <--> LEAF4:et5 
-INFO[0001] Creating virtual wire: SPINE2:et1 <--> LEAF1:et2 
-INFO[0001] Creating virtual wire: SPINE1:et2 <--> LEAF2:et1 
-INFO[0001] Creating virtual wire: HostC:eth2 <--> LEAF4:et3 
-INFO[0001] Creating virtual wire: HostC:eth1 <--> LEAF3:et3 
-INFO[0001] Creating virtual wire: SPINE1:et3 <--> LEAF3:et1 
-INFO[0001] Creating virtual wire: SPINE2:et2 <--> LEAF2:et2 
-INFO[0001] Creating virtual wire: HostD:eth1 <--> LEAF3:et4 
-INFO[0001] Creating virtual wire: SPINE1:et4 <--> LEAF4:et1 
-INFO[0001] Creating virtual wire: SPINE1:et1 <--> LEAF1:et1 
-INFO[0001] Creating virtual wire: HostD:eth2 <--> LEAF4:et4 
-INFO[0001] Creating virtual wire: LEAF1:et5 <--> LEAF2:et5 
-INFO[0001] Creating virtual wire: LEAF3:et6 <--> LEAF4:et6 
-INFO[0004] Creating virtual wire: HostA:eth1 <--> LEAF1:et3 
-INFO[0004] Creating virtual wire: HostB:eth2 <--> LEAF2:et4 
-INFO[0004] Creating virtual wire: HostB:eth1 <--> LEAF1:et4 
-INFO[0004] Creating virtual wire: HostA:eth2 <--> LEAF2:et3 
-INFO[0005] Running postdeploy actions for Arista cEOS 'SPINE2' node 
-INFO[0005] Running postdeploy actions for Arista cEOS 'LEAF4' node 
-INFO[0005] Running postdeploy actions for Arista cEOS 'SPINE1' node 
-INFO[0005] Running postdeploy actions for Arista cEOS 'LEAF1' node 
-INFO[0005] Running postdeploy actions for Arista cEOS 'LEAF3' node 
-INFO[0005] Running postdeploy actions for Arista cEOS 'LEAF2' node 
-INFO[0048] Adding containerlab host entries to /etc/hosts file 
-INFO[0048] Executed command "bash /usr/local/bin/hostnetconfig.sh -b -i 10.10.10.101/24 -g 10.10.10.1" on the node "HostA". stdout: 
-INFO[0048] Executed command "bash /usr/local/bin/hostnetconfig.sh -b -i 10.10.10.102/24 -g 10.10.10.1" on the node "HostC". stdout: 
-INFO[0048] Executed command "bash /usr/local/bin/hostnetconfig.sh -b -i 10.20.20.101/24 -g 10.20.20.1" on the node "HostD". stdout: 
-INFO[0048] Executed command "bash /usr/local/bin/hostnetconfig.sh -b -i 10.30.30.101/24 -g 10.30.30.1" on the node "HostB". stdout: 
+INFO[0000] Containerlab v0.41.2 started
+INFO[0000] Parsing & checking topology file: lab.yaml
+INFO[0000] Creating lab directory: /home/mitch/avd-demo/clab-evpn-demo
+INFO[0000] Creating docker network: Name="mgmt", IPv4Subnet="172.100.100.0/24", IPv6Subnet="", MTU="1500"
+INFO[0000] Creating container: "HostB"
+INFO[0000] Creating container: "HostA"
+INFO[0000] Creating container: "HostC"
+INFO[0000] Creating container: "HostD"
+INFO[0000] Creating container: "SPINE2"
+INFO[0000] Creating container: "LEAF2"
+INFO[0000] Creating container: "LEAF4"
+INFO[0000] Creating container: "LEAF1"
+INFO[0000] Creating container: "SPINE1"
+INFO[0000] Creating container: "LEAF3"
+INFO[0001] Creating virtual wire: SPINE2:et3 <--> LEAF3:et2
+INFO[0001] Creating virtual wire: SPINE2:et4 <--> LEAF4:et2
+INFO[0001] Creating virtual wire: LEAF1:et6 <--> LEAF2:et6
+INFO[0001] Creating virtual wire: LEAF3:et5 <--> LEAF4:et5
+INFO[0001] Creating virtual wire: SPINE2:et1 <--> LEAF1:et2
+INFO[0001] Creating virtual wire: SPINE1:et2 <--> LEAF2:et1
+INFO[0001] Creating virtual wire: HostC:eth2 <--> LEAF4:et3
+INFO[0001] Creating virtual wire: HostC:eth1 <--> LEAF3:et3
+INFO[0001] Creating virtual wire: SPINE1:et3 <--> LEAF3:et1
+INFO[0001] Creating virtual wire: SPINE2:et2 <--> LEAF2:et2
+INFO[0001] Creating virtual wire: HostD:eth1 <--> LEAF3:et4
+INFO[0001] Creating virtual wire: SPINE1:et4 <--> LEAF4:et1
+INFO[0001] Creating virtual wire: SPINE1:et1 <--> LEAF1:et1
+INFO[0001] Creating virtual wire: HostD:eth2 <--> LEAF4:et4
+INFO[0001] Creating virtual wire: LEAF1:et5 <--> LEAF2:et5
+INFO[0001] Creating virtual wire: LEAF3:et6 <--> LEAF4:et6
+INFO[0004] Creating virtual wire: HostA:eth1 <--> LEAF1:et3
+INFO[0004] Creating virtual wire: HostB:eth2 <--> LEAF2:et4
+INFO[0004] Creating virtual wire: HostB:eth1 <--> LEAF1:et4
+INFO[0004] Creating virtual wire: HostA:eth2 <--> LEAF2:et3
+INFO[0005] Running postdeploy actions for Arista cEOS 'SPINE2' node
+INFO[0005] Running postdeploy actions for Arista cEOS 'LEAF4' node
+INFO[0005] Running postdeploy actions for Arista cEOS 'SPINE1' node
+INFO[0005] Running postdeploy actions for Arista cEOS 'LEAF1' node
+INFO[0005] Running postdeploy actions for Arista cEOS 'LEAF3' node
+INFO[0005] Running postdeploy actions for Arista cEOS 'LEAF2' node
+INFO[0048] Adding containerlab host entries to /etc/hosts file
+INFO[0048] Executed command "bash /usr/local/bin/hostnetconfig.sh -b -i 10.10.10.101/24 -g 10.10.10.1" on the node "HostA". stdout:
+INFO[0048] Executed command "bash /usr/local/bin/hostnetconfig.sh -b -i 10.10.10.102/24 -g 10.10.10.1" on the node "HostC". stdout:
+INFO[0048] Executed command "bash /usr/local/bin/hostnetconfig.sh -b -i 10.20.20.101/24 -g 10.20.20.1" on the node "HostD". stdout:
+INFO[0048] Executed command "bash /usr/local/bin/hostnetconfig.sh -b -i 10.30.30.101/24 -g 10.30.30.1" on the node "HostB". stdout:
 +----+--------+--------------+------------------+-------+---------+--------------------+--------------+
 | #  |  Name  | Container ID |      Image       | Kind  |  State  |    IPv4 Address    | IPv6 Address |
 +----+--------+--------------+------------------+-------+---------+--------------------+--------------+
@@ -430,7 +429,7 @@ interface Management0
 !
 ip route vrf MGMT 0.0.0.0/0 172.100.100.1 #(4)!
 !
-management ssh 
+management ssh
    vrf MGMT
       no shutdown #(5)!
 !
@@ -509,18 +508,18 @@ Once this command is entered, the topology will be stopped, and the containers a
 The output of a successful `destroy` command is shown below:
 
 ```bash
-INFO[0000] Parsing & checking topology file: lab.yaml   
-INFO[0000] Destroying lab: evpn-demo                    
-INFO[0000] Removed container: HostC                     
-INFO[0000] Removed container: HostA                     
-INFO[0000] Removed container: HostD                     
-INFO[0001] Removed container: HostB                     
-INFO[0001] Removed container: SPINE1                    
-INFO[0001] Removed container: SPINE2                    
-INFO[0002] Removed container: LEAF4                     
-INFO[0002] Removed container: LEAF2                     
-INFO[0002] Removed container: LEAF3                     
-INFO[0002] Removed container: LEAF1                     
+INFO[0000] Parsing & checking topology file: lab.yaml
+INFO[0000] Destroying lab: evpn-demo
+INFO[0000] Removed container: HostC
+INFO[0000] Removed container: HostA
+INFO[0000] Removed container: HostD
+INFO[0001] Removed container: HostB
+INFO[0001] Removed container: SPINE1
+INFO[0001] Removed container: SPINE2
+INFO[0002] Removed container: LEAF4
+INFO[0002] Removed container: LEAF2
+INFO[0002] Removed container: LEAF3
+INFO[0002] Removed container: LEAF1
 INFO[0002] Removing containerlab host entries from /etc/hosts file
 ```
 
