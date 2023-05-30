@@ -1,4 +1,4 @@
-# Getting Started with Container Lab (cLab 101)
+# Getting Started with ContainerLab
 
 ## **Introduction**
 

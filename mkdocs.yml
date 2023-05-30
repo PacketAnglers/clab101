@@ -1,4 +1,4 @@
-site_name: ContainerLab (cLab) 101
+site_name: Getting Started with ContainerLab
 
 nav:
   - Home: index.md
