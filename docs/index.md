@@ -332,7 +332,226 @@ ContainerLab supports multiple topologies running in parallel on the same host. 
 Next, we'll use the `clab deploy` command to deploy our topology.
 
 ```bash
+mitch@mitchlab2:~$ sudo clab deploy -t lab.yaml #(1)!
+```
 
+1. In this example, `lab.yaml` exists in the current working directory. A path to the topology file could be specified here as well.
+
+The output of this command, resulting in a successfully running topology, is below for reference:
+
+```ini
+INFO[0000] Containerlab v0.41.2 started                 
+INFO[0000] Parsing & checking topology file: lab.yaml   
+INFO[0000] Creating lab directory: /home/mitch/avd-demo/clab-evpn-demo 
+INFO[0000] Creating docker network: Name="mgmt", IPv4Subnet="172.100.100.0/24", IPv6Subnet="", MTU="1500" 
+INFO[0000] Creating container: "HostB"                  
+INFO[0000] Creating container: "HostA"                  
+INFO[0000] Creating container: "HostC"                  
+INFO[0000] Creating container: "HostD"                  
+INFO[0000] Creating container: "SPINE2"                 
+INFO[0000] Creating container: "LEAF2"                  
+INFO[0000] Creating container: "LEAF4"                  
+INFO[0000] Creating container: "LEAF1"                  
+INFO[0000] Creating container: "SPINE1"                 
+INFO[0000] Creating container: "LEAF3"                  
+INFO[0001] Creating virtual wire: SPINE2:et3 <--> LEAF3:et2 
+INFO[0001] Creating virtual wire: SPINE2:et4 <--> LEAF4:et2 
+INFO[0001] Creating virtual wire: LEAF1:et6 <--> LEAF2:et6 
+INFO[0001] Creating virtual wire: LEAF3:et5 <--> LEAF4:et5 
+INFO[0001] Creating virtual wire: SPINE2:et1 <--> LEAF1:et2 
+INFO[0001] Creating virtual wire: SPINE1:et2 <--> LEAF2:et1 
+INFO[0001] Creating virtual wire: HostC:eth2 <--> LEAF4:et3 
+INFO[0001] Creating virtual wire: HostC:eth1 <--> LEAF3:et3 
+INFO[0001] Creating virtual wire: SPINE1:et3 <--> LEAF3:et1 
+INFO[0001] Creating virtual wire: SPINE2:et2 <--> LEAF2:et2 
+INFO[0001] Creating virtual wire: HostD:eth1 <--> LEAF3:et4 
+INFO[0001] Creating virtual wire: SPINE1:et4 <--> LEAF4:et1 
+INFO[0001] Creating virtual wire: SPINE1:et1 <--> LEAF1:et1 
+INFO[0001] Creating virtual wire: HostD:eth2 <--> LEAF4:et4 
+INFO[0001] Creating virtual wire: LEAF1:et5 <--> LEAF2:et5 
+INFO[0001] Creating virtual wire: LEAF3:et6 <--> LEAF4:et6 
+INFO[0004] Creating virtual wire: HostA:eth1 <--> LEAF1:et3 
+INFO[0004] Creating virtual wire: HostB:eth2 <--> LEAF2:et4 
+INFO[0004] Creating virtual wire: HostB:eth1 <--> LEAF1:et4 
+INFO[0004] Creating virtual wire: HostA:eth2 <--> LEAF2:et3 
+INFO[0005] Running postdeploy actions for Arista cEOS 'SPINE2' node 
+INFO[0005] Running postdeploy actions for Arista cEOS 'LEAF4' node 
+INFO[0005] Running postdeploy actions for Arista cEOS 'SPINE1' node 
+INFO[0005] Running postdeploy actions for Arista cEOS 'LEAF1' node 
+INFO[0005] Running postdeploy actions for Arista cEOS 'LEAF3' node 
+INFO[0005] Running postdeploy actions for Arista cEOS 'LEAF2' node 
+INFO[0048] Adding containerlab host entries to /etc/hosts file 
+INFO[0048] Executed command "bash /usr/local/bin/hostnetconfig.sh -b -i 10.10.10.101/24 -g 10.10.10.1" on the node "HostA". stdout: 
+INFO[0048] Executed command "bash /usr/local/bin/hostnetconfig.sh -b -i 10.10.10.102/24 -g 10.10.10.1" on the node "HostC". stdout: 
+INFO[0048] Executed command "bash /usr/local/bin/hostnetconfig.sh -b -i 10.20.20.101/24 -g 10.20.20.1" on the node "HostD". stdout: 
+INFO[0048] Executed command "bash /usr/local/bin/hostnetconfig.sh -b -i 10.30.30.101/24 -g 10.30.30.1" on the node "HostB". stdout: 
++----+--------+--------------+------------------+-------+---------+--------------------+--------------+
+| #  |  Name  | Container ID |      Image       | Kind  |  State  |    IPv4 Address    | IPv6 Address |
++----+--------+--------------+------------------+-------+---------+--------------------+--------------+
+|  1 | HostA  | 9adcf1907483 | mitchv85/devhost | linux | running | 172.100.100.201/24 | N/A          |
+|  2 | HostB  | afc129768461 | mitchv85/devhost | linux | running | 172.100.100.202/24 | N/A          |
+|  3 | HostC  | dd028144e1e4 | mitchv85/devhost | linux | running | 172.100.100.203/24 | N/A          |
+|  4 | HostD  | aca2670837e0 | mitchv85/devhost | linux | running | 172.100.100.204/24 | N/A          |
+|  5 | LEAF1  | 1a7608f9dde2 | ceos:4.30.0F     | ceos  | running | 172.100.100.103/24 | N/A          |
+|  6 | LEAF2  | d1da14cad69f | ceos:4.30.0F     | ceos  | running | 172.100.100.104/24 | N/A          |
+|  7 | LEAF3  | 88dbd2141afb | ceos:4.30.0F     | ceos  | running | 172.100.100.105/24 | N/A          |
+|  8 | LEAF4  | 87767a4684db | ceos:4.30.0F     | ceos  | running | 172.100.100.106/24 | N/A          |
+|  9 | SPINE1 | 2ab18e4d33ad | ceos:4.30.0F     | ceos  | running | 172.100.100.101/24 | N/A          |
+| 10 | SPINE2 | 04d7a820b0ae | ceos:4.30.0F     | ceos  | running | 172.100.100.102/24 | N/A          |
++----+--------+--------------+------------------+-------+---------+--------------------+--------------+
+```
+
+At this point, the topology is running and we can start interacting with it
+
+### **Interacting with a Topology**
+
+Connectivity to nodes in a given topology can be established in multiple ways. This guide will focus on two methods:
+
+1. SSH directly to the nodes from a remote workstation
+2. Connecting to the console of the nodes via the ContainerLab host
+
+#### **SSH**
+
+In order to SSH to the nodes from a remote workstation, a few items need to be in place first
+
+1. The `Management0` interface on the node has an IP address in `mgmt.ipv4-subnet` network defined in the topology file
+2. A default route pointing to a next-hop of the first usable address in the `mgmt.ipv4-subnet` network.
+
+By default, the first usable address of the network defined in `mgmt.ipv4-subnet` is owned by the ContainerLab host, and is the out of band management "gateway" for the nodes in the topology.
+
+For example, here is a snippet of the `SPINE1` node's startup-configuration
+
+```yaml
+vrf instance MGMT #(1)!
+!
+interface Management0
+   vrf MGMT #(2)!
+   ip address 172.100.100.101/24 #(3)!
+!
+ip route vrf MGMT 0.0.0.0/0 172.100.100.1 #(4)!
+!
+management ssh 
+   vrf MGMT
+      no shutdown #(5)!
+!
+username admin privilege 15 role network-admin secret admin #(6)!
+!
+```
+
+1. :pencil2: Define a VRF for Management.
+2. Place the `Management0` interface into the MGMT VRF.
+3. Statically define the IP address of the `Management0` interface.
+4. Set a default route for the MGMT VRF. The next-hop is the first usable address in the network specified by `mgmt.ipv4-subnet` in the topology file.
+5. Enable SSH on VRF MGMT on the cEOS-lab node.
+6. Define a user that can be used when remotely accessing the node via SSH.
+
+???+ tip
+    Even though we've manually specified this information in the startup-config, ContainerLab can handle some of this automatically. More informaiton can be found [here](https://containerlab.dev/manual/kinds/ceos/)
+
+With this configuration in place, we can now SSH to the node from a remote SSH session.
+
+For this example we'll SSH to the `SPINE1` node, definied in our lab.yaml topology file, which is running on a ContainerLab host named `mitchlab2.packetanglers.com`
+
+```bash hl_lines="1 4"
+PS C:\Users\Mitch> ssh -p 22001 admin@mitchlab2.packetanglers.com
+(admin@mitchlab2.packetanglers.com) Password:
+Last login: Tue May 30 18:51:48 2023 from 24.29.218.185
+SPINE1# exit
+Connection to mitchlab2.packetanglers.com closed.
+PS C:\Users\Mitch>
+```
+
+In the above output, we SSH'd to TCP port `22001`, which is what we definied in the port forwarding for the `SPINE1` node in our topology file
+
+```bash hl_lines="6"
+SPINE1:
+    kind: ceos
+    mgmt-ipv4: 172.100.100.101
+    startup-config: startup-configs/SPINE1.cfg
+    ports:
+    - '22001:22'
+    - '8001:80'
+    - '44301:443'
+```
+
+A high level illustration of the SSH connectivity method, used to access `SPINE1` from a remote host, is shown below
+
+![Topology](assets/images/ssh.svg){: style="width:800px"}
+
+#### **Console via cLab Host**
+
+Sometimes, usually for troubleshooting or getting some initial configuration on the node, there is a need to connect to the node's console directly from the ContainerLab host.
+
+This can be done via the `docker exec` command, with an example for cEOS-lab shown below:
+
+```bash hl_lines="1"
+mitch@mitchlab2:~$ sudo docker exec -it SPINE1 Cli
+SPINE1>en
+SPINE1#
+```
+
+???+ tip
+    The name of the node to connect to, in the example above `SPINE1`, can be found via the `sudo clab inspect` command.
+
+### **Stopping a Topology**
+
+Stopping a topology can be accomplished via the `clab destroy` command.
+
+```bash
+mitch@mitchlab2:~$ sudo clab destroy -t lab.yaml -c
+```
+
+???+ note
+    The `-c` flag is used to specify "Cleanup". The full list of flags associated with the `destroy` command, and their respective use cases, can be found [here](https://containerlab.dev/cmd/destroy/)
+
+Once this command is entered, the topology will be stopped, and the containers associated with the nodes will be removed.
+
+The output of a successful `destroy` command is shown below:
+
+```bash
+INFO[0000] Parsing & checking topology file: lab.yaml   
+INFO[0000] Destroying lab: evpn-demo                    
+INFO[0000] Removed container: HostC                     
+INFO[0000] Removed container: HostA                     
+INFO[0000] Removed container: HostD                     
+INFO[0001] Removed container: HostB                     
+INFO[0001] Removed container: SPINE1                    
+INFO[0001] Removed container: SPINE2                    
+INFO[0002] Removed container: LEAF4                     
+INFO[0002] Removed container: LEAF2                     
+INFO[0002] Removed container: LEAF3                     
+INFO[0002] Removed container: LEAF1                     
+INFO[0002] Removing containerlab host entries from /etc/hosts file
+```
+
+At this point, if our topology was the only one running on the ContainerLab host, the output of `sudo clab inspect -a` should return no active topologies
+
+```bash
+mitch@mitchlab2:~$ sudo clab inspect -a
+INFO[0000] no containers found
+```
+
+Additionally, the ouptut of the `sudo docker ps -a` command should show no containers
+
+```bash
+mitch@mitchlab2:~$ sudo docker ps -a
+CONTAINER ID   IMAGE     COMMAND   CREATED   STATUS    PORTS     NAMES
+```
+
+### **Forcing the removal of nodes**
+
+In the event that an error is encountered when destroying a topology, and running or stopped containers are still listed in the output of `sudo docker ps -a`, the `sudo docker system prune` command can be used to force the removal of containers and any unused images.
+
+```bash
+mitch@mitchlab2:~$ sudo docker system prune
+WARNING! This will remove:
+  - all stopped containers
+  - all networks not used by at least one container
+  - all dangling images
+  - all dangling build cache
+
+Are you sure you want to continue? [y/N] y
+Total reclaimed space: 0B
 ```
 
 --8<-- "includes/abbreviations.md"
